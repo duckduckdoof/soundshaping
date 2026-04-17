@@ -54,7 +54,8 @@ MIN_SCALE = [
 
 # Time information
 
-BPM_DEFAULT = 60
+CPM_DEFAULT = 60
+REPEAT_TIMELINE = True
 
 # Sampling
 
@@ -181,13 +182,43 @@ class Sound:
         return base
 
 
-class Timing:
+class TimeLine:
     """
     We can play sound data, but for how long? How do we align a sequence/harmony of notes onto
     a single timeline? That's what this class is for!
+
+    We start with a timeline which tells us the length of time a cycle takes, 
+    then we add notes to that timeline, subdividing it accordingly.
+
+    There are multiple ways we can go about with these subdivisions; one corresponds
+    to traditional time-keeping in music; the other corresponds to more ad-hoc methods
+    like in describing a series of sounds via notes in a program like Strudel.
+
+    We will start easy -- given a cpm, we will allow arbitrary subdivision
+    of the timeline based on the number of notes provided for a cycle.
+
+    Pauses are denoted by None's in a note sequence.
     """
 
-    def __init__(self, bpm: int = BPM_DEFAULT):
+    def __init__(self, cpm: int = CPM_DEFAULT, repeat: bool = REPEAT_TIMELINE):
+        self.cpm = cpm
+        self.cycles = []
+        self.repeat = repeat
+
+    def add_notes(self, notes: list, sounds: list) -> None:
+        """
+        Add a sequence of notes (and their corresponding sound profiles)
+        to the timeline.
+
+        If we want to add a new cycle (like a new measure), we add this at 
+        a single index. We provide more indices if we want to add a note sequence
+        *within* an existing cycle in the timeline.
+
+        Ex: add([0], [n1, n2], [s1, s2]) --> T[n1, n2]
+            add([0, 0], ...)             --> T[[n11, n12], n2]
+
+        NOTE: probably need "placeholder" marks (None's?)
+        """
         pass
 
 class StdNotes:
