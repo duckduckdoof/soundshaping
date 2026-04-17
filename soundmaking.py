@@ -1,5 +1,5 @@
 """
-music.py
+soundmaking.py
 
 author: Caleb Scott
 
@@ -349,7 +349,3 @@ def play(sound_data: np.ndarray):
     """
     sd.play(sound_data)
     sd.wait()
-
-# MAIN
-if __name__ == "__main__":
-    pass
