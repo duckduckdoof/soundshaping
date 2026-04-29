@@ -68,7 +68,7 @@ sd.default.channels = 2
 
 class Note:
     """
-    A Note contains information about what can be played.
+    A Note contains information about what can be turned into sound.
     """
 
     def __init__(self, midi_no: int) -> None:
