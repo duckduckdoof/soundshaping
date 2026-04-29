@@ -95,7 +95,7 @@ class ADSREnvelope:
     The total durations for each phase must add to 1.
     """
 
-    def __init__(self, 
+    def __init__(self,
                 atk_dur: float,
                 atk_height: float,
                 dec_dur: float,
@@ -130,12 +130,12 @@ class Sound:
     long as it returns an np.ndarray
     """
 
-    def __init__(self, 
-            freq: int, 
-            duration: float, 
-            amplitude: float, 
+    def __init__(self,
+            freq: int,
+            duration: float,
+            amplitude: float,
             wave_func,
-            adsr: ADSREnvelope = None,
+            adsr: ADSREnvelope | None = None,
             sample_rate: int = SAMPLE_RATE):
         self.freq = freq
         self.duration = duration
@@ -158,7 +158,7 @@ class Sound:
         # Amplitude is determined by 'amplitude' parameter (global scaling)
         # and the provided adsr envelope
         waveform = self.amplitude * np.multiply(
-                self.gen_adsr(), 
+                self.gen_adsr(),
                 self.wave_func(2 * np.pi * self.freq * t_points)
         )
         return waveform
@@ -277,7 +277,7 @@ class StdNotes:
 # MIDI conversions
 
 def midi_to_freq(
-        midi_no: int, 
+        midi_no: int,
         base_freq: int = BASE_FREQ,
         base_midi: int = BASE_MIDI
         ) -> float:
