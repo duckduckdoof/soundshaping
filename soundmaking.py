@@ -95,15 +95,15 @@ class ADSREnvelope:
     The total durations for each phase must add to 1.
     """
 
-    def __init__(self,
-                atk_dur: float,
-                atk_height: float,
-                dec_dur: float,
-                dec_height: float,
-                sus_dur: float,
-                rel_dur: float
-            ):
-
+    def __init__(
+        self,
+        atk_dur: float,
+        atk_height: float,
+        dec_dur: float,
+        dec_height: float,
+        sus_dur: float,
+        rel_dur: float
+    ) -> None:
         self.atk_dur = atk_dur
         self.atk_height = atk_height
         self.dec_dur = dec_dur
@@ -116,7 +116,7 @@ class Harmonics:
     Class for specifying the harmonics of a sound, given a base frequency.
     """
 
-    def __init__(self, harmonics: list, levels: list):
+    def __init__(self, harmonics: list, levels: list) -> None:
         self.freqs = harmonics
         self.base = harmonics[0]
         self.levels = levels
@@ -130,18 +130,22 @@ class Sound:
     long as it returns an np.ndarray
     """
 
-    def __init__(self,
-            freq: int,
-            duration: float,
-            amplitude: float,
-            wave_func,
-            adsr: ADSREnvelope | None = None,
-            sample_rate: int = SAMPLE_RATE):
+    def __init__(
+        self,
+        freq: int,
+        duration: float,
+        amplitude: float,
+        wave_func,
+        adsr: ADSREnvelope | None = None,
+        sample_rate: int = SAMPLE_RATE
+    ) -> None:
         self.freq = freq
         self.duration = duration
         self.amplitude = amplitude
         self.wave_func = wave_func
         self.sample_rate = sample_rate
+
+        # Might help to clamp the duration to a minimum, since sample rate is finite.
         self.n_samples = int(self.sample_rate * self.duration)
         self.adsr = adsr
 
