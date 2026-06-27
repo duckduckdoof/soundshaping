@@ -51,9 +51,13 @@ class ADSREnvelope:
 class Harmonics:
     """
     Class for specifying the harmonics of a sound, given a base frequency.
+
+    NOTE: This should be reworked.
+
+    It is related to the harmonics function below.
     """
 
-    def __init__(self, harmonics: list, levels: list) -> None:
+    def __init__(self, harmonics: list[float], levels: list[float]) -> None:
         self.freqs = harmonics
         self.base = harmonics[0]
         self.levels = levels
@@ -132,8 +136,17 @@ class Sound:
 
         return base
 
-# Visuals & Playing
+# Useful frequency utilities
+def get_harmonics(fundamental: int, harmonics: list) -> list:
+    """
+    Given a fundamental frequency, return the full
+    list of harmonic frequencies described by the 'harmonics' list.
 
+    The list is a list of positive integers.
+    """
+    return [fundamental * h for h in harmonics]
+
+# Visuals & Playing
 def plot_sound(sound_data: np.ndarray):
     """
     Given generated sound data, plot it!

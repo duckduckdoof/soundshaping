@@ -240,3 +240,13 @@ def semitone_dist(n1: Note, n2: Note) -> int:
     Returns signed distance current note is from another.
     """
     return n2.m - n1.m
+
+def rel_freq(n1: Note, n2: Note) -> float:
+    """
+    Given two notes, return their frequency ratio f2/f1.
+
+    This can be achieved two ways:
+    1. f2/f1 (f2 >= f1)
+    2. 2**|(n2.midi - n1.midi)|/12, assuming a MIDI configuration tuned at 440Hz
+    """
+    return 2**(abs(n2.m - n1.m)/12)

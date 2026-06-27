@@ -36,7 +36,6 @@ def sin(x):
 
 # Waveforms (other than sine)
 # These are fourier approximations of the follwing wave shapes:
-
 def f_square(x, n: int = 100):
     c = 4/np.pi
     return c * sum([np.sin(x * (2*k - 1))/(2*k - 1) for k in range(1, n+1)])
@@ -50,7 +49,6 @@ def f_saw(x, n: int = 100):
     return c * sum([((-1)**k) * np.sin(x * k)/k for k in range(1, n+1)])
 
 # Non-fourier descriptions
-
 def nf_square(x):
     return np.sign(sin(x))
 
