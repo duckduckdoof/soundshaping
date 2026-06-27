@@ -14,7 +14,7 @@ This note system assumes that C3 is MIDI 60.
 import math
 import re
 
-from typing import Any
+from typing import Union
 
 # CONSTANTS
 
@@ -75,7 +75,7 @@ class Note:
 
     def __init__(
         self,
-        repr: Any,
+        repr: Union[int, str],
         r_type: str
     ):
         # Based on the r_type, determine how to build the note.
