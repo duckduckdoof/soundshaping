@@ -12,6 +12,7 @@ Module for sound information and playing sounds.
 from modules.waves import Wave
 import numpy as np
 import sounddevice as sd
+import matplotlib.pyplot as plt
 
 # CONSTANTS
 SAMPLE_RATE = 44100
@@ -130,6 +131,23 @@ class Sound:
         base[sus_offset:] = np.linspace(self.adsr.dec_height, 0.0, rel_len, False)
 
         return base
+
+# Visuals & Playing
+
+def plot_sound(sound_data: np.ndarray):
+    """
+    Given generated sound data, plot it!
+    """
+    plt.plot(sound_data)
+    plt.show()
+
+def play(sound_data: np.ndarray):
+    """
+    Plays sound data generated from a numpy array.
+    """
+    sd.play(sound_data)
+    sd.wait()
+
 # MAIN
 if __name__ == 'main':
     pass
