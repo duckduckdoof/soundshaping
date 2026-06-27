@@ -91,6 +91,9 @@ class Note:
             raise Exception("Octave not properly calculated in Note creation.")
         self.oct = int(res.group("oct"))
 
+    def __str__(self) -> str:
+        return f"{self.n:4s}"
+
 class StdNotes:
     """
     This class generates valid notes on the full MIDI range.
@@ -149,7 +152,7 @@ class StdNotes:
         """
         Returns positive distance between two notes.
         """
-        return abs(n1.semitone_dist(n2))
+        return abs(semitone_dist(n1, n2))
 
     def print_notes(self) -> None:
         current_oct = self.notes[0].oct
