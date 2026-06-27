@@ -209,7 +209,7 @@ def note_to_freq(note: str) -> float:
     midi = note_to_midi(note)
     return midi_to_freq(midi)
 
-# These methods require high precision in the frequency to get
+# These freq -> X methods require high precision in the frequency to get
 # back to its corresponding note/midi number. Useful, but not the most helpful.
 def freq_to_midi(
     freq: float,
