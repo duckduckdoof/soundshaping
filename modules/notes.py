@@ -63,6 +63,10 @@ NOTE_LOOKUP_INV = {
 BASE_OCTAVE = -2
 STD_OCTAVE = 3
 
+# Scales
+MAJ_SCALE = [2, 2, 1, 2, 2, 2, 1]
+MIN_SCALE = [2, 1, 2, 2, 1, 2, 2]
+
 # CLASSES
 class Note:
     """
@@ -120,18 +124,21 @@ class StdNotes:
         # Organized by midi number
         self.midi_notes = {n.m: n for n in self.notes}
 
-    def get_by_notes(self, notes: list, octaves: list) -> list:
+    def __getitem__(self, key: str):
+        """
+        Quick accessor for getting a Note object, given its string.
+        """
+        return self.descr_notes[key]
+
+    def get_by_notes(self, notes: list) -> list:
         """
         Returns note objects based on their string notation.
 
         TODO: mark for sharp/flat notations
         """
-        results = []
-        for octave in octaves:
-            results.extend([n for n in self.oct_notes[octave] if n.n in notes])
-        return results
+        return [self[n] for n in notes]
 
-    def get_scale(self, tonic: Note, key: list) -> list:
+    def get_scale(self, tonic: Note, scale: list = MAJ_SCALE) -> list:
         """
         Given a selected octave, base note (called 'tonic'), and key (maj/min/etc.),
         return all possible notes which describe this scale.
@@ -143,7 +150,7 @@ class StdNotes:
         """
         results = [tonic]
         idx = tonic.m
-        for offset in key:
+        for offset in scale:
             idx += offset
             results.append(self.notes[idx])
         return results
