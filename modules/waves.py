@@ -15,15 +15,15 @@ import numpy as np
 class Wave:
 
     def __init__(self, w_type: str):
-        if w_type is 'sin':
+        if w_type == 'sin':
             self.f = sin
-        elif w_type is 'f_square':
+        elif w_type == 'f_square':
             self.f = f_square
-        elif w_type is 'f_triangle':
+        elif w_type == 'f_triangle':
             self.f = f_triangle
-        elif w_type is 'f_saw':
+        elif w_type == 'f_saw':
             self.f = f_saw
-        elif w_type is 'square':
+        elif w_type == 'square':
             self.f = nf_square
         else:
             raise Exception("Wave type not recognized")

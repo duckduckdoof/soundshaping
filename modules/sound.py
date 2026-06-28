@@ -51,16 +51,20 @@ class ADSREnvelope:
 class Harmonics:
     """
     Class for specifying the harmonics of a sound, given a base frequency.
-
-    NOTE: This should be reworked.
-
-    It is related to the harmonics function below.
     """
 
-    def __init__(self, harmonics: list[float], levels: list[float]) -> None:
-        self.freqs = harmonics
-        self.base = harmonics[0]
-        self.levels = levels
+    def __init__(
+        self,
+        base_freq: float,
+        harmonics: list[int],
+        amplitudes: list[float]
+    ) -> None:
+        if len(harmonics) != len(amplitudes):
+            raise Exception("Harmonics and Amplitudes should be same length.")
+        h = list(zip(harmonics, amplitudes))
+        self.harmonics = [
+            (base_freq * harmonic, amplitude) for harmonic, amplitude in h
+        ]
 
 class Sound:
     """
@@ -103,8 +107,8 @@ class Sound:
         # Amplitude is determined by 'amplitude' parameter (global scaling)
         # and the provided adsr envelope
         waveform = self.amplitude * np.multiply(
-                self.gen_adsr(),
-                self.wave.f(2 * np.pi * self.freq * t_points)
+            self.gen_adsr(),
+            self.wave.f(2 * np.pi * self.freq * t_points)
         )
         return waveform
 
@@ -136,15 +140,22 @@ class Sound:
 
         return base
 
-# Useful frequency utilities
-def get_harmonics(fundamental: int, harmonics: list) -> list:
+# Harmonics
+def harmonics(base_freq: float, h: list[int], a: list[float]) -> list:
     """
-    Given a fundamental frequency, return the full
-    list of harmonic frequencies described by the 'harmonics' list.
-
-    The list is a list of positive integers.
+    Given a base frequency, and harmonics (positive integers) + amplitudes,
+    generate a harmonics list.
     """
-    return [fundamental * h for h in harmonics]
+    if len(h) != len(a):
+        raise Exception("Harmonics and Amplitudes should be same length.")
+    if any([e <= 0 for e in h]):
+        raise Exception("Harmonics should be positive integers.")
+    if any([amp < 0.0 for amp in a]):
+        raise Exception("Amplitudes must be non-zero.")
+    combined = list(zip(h, a))
+    return [
+        (base_freq * harmonic, amplitude) for harmonic, amplitude in combined
+    ]
 
 # Visuals & Playing
 def plot_sound(sound_data: np.ndarray):
